@@ -1,0 +1,14 @@
+function [p_x, p_y, v_x, v_y] = gen_hex(r, n, hex, BS)
+v_x = r * cos((0 : 6) * pi / 3) + hex(1) + BS(1);
+v_y = r * sin((0 : 6) * pi / 3) + hex(2) + BS(2);
+p_range = unifrnd(0, 1, [5 * n, 1]);
+p_range = r * sqrt(p_range);
+p_theta = unifrnd(0, 2 * pi, [5 * n, 1]);
+p_x = p_range .* cos(p_theta) + hex(1) + BS(1);
+p_y = p_range .* sin(p_theta) + hex(2) + BS(2);
+in = inpolygon(p_x, p_y, v_x, v_y);
+p_x = p_x(in);
+p_y = p_y(in);
+idx = randperm(length(p_x));
+p_x = p_x(idx(1 : n));
+p_y = p_y(idx(1 : n));
